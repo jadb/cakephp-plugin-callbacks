@@ -18,7 +18,7 @@ class PluginCallbacksTestCase extends CakeTestCase {
 	 */
 	public function startTest($method = null) {
 		$path = APP . 'plugins' . DS . 'plugin_callbacks' . DS . 'tests' . DS . 'mock_app' . DS;
-		App::import('Model', 'User', 'AppModel', array(), $path . 'plugins' . DS . 'my_custom_plugin' . DS . 'models' . DS . 'user.php');
+		App::import('Model', 'User', 'Model', array(), $path . 'plugins' . DS . 'my_custom_plugin' . DS . 'models' . DS . 'user.php');
 		$this->MockedPluginModel =& ClassRegistry::init('User');
 		$this->MockedPluginModel->Behaviors->attach('PluginCallbacks.Callbacks', compact('path'));
 		parent::startTest($method);

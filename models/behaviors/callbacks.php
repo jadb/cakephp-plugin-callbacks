@@ -104,28 +104,31 @@ class CallbacksBehavior extends ModelBehavior {
 	 * @return void
 	 * @access public
 	 */
-	public function load($cached = true) {
-		if ($cached === true) {
-			$this->settings = Utility::cached('_suite_callbacks_', '_admin_suite_core_', $this, 'load', false);
-			return;
+	public function load() {
+		$cached = Cache::read('_plugin_callbacks_', '_cake_models_');
+		if ($cached !== false) {
+			$this->settings = $cached;
+			return $cached;
 		}
+
 		App::import('Folder');
 
-		// get all plugins
 		$Folder = new Folder($this->path . 'plugins');
 		$folders = current($Folder->ls());
-
-		// switch directories
-		$Folder->cd($this->path);
-
-		// find defined callbacks for each installed plugin
+		$files = array();
 		foreach ($folders as $folder) {
-			$files = $Folder->findRecursive('([a-z_]+)_' . $folder . '.php');
+			if ($Folder->cd($this->path . 'models' . DS . 'callbacks')) {
+				$files = $Folder->findRecursive('([a-z_]+)_' . $folder . '.php');
+			}
+			foreach($folders as $_folder) {
+				if ($Folder->cd($this->path . 'plugins' . DS . $_folder . 'models' . DS . 'callbacks')) {
+					array_push($files, $Folder->findRecursive('([a-z_]+)_' . $folder . '.php'));
+				}
+			}
 			foreach ($files as $k => $file) {
 				if (!preg_match_all('/models\/callbacks\/([a-z_]+)_' . $folder . '\.php/i', $file, $matches)) {
 					continue;
 				}
-				// unset($files[$k]);
 				$plugin = current($matches[1]);
 				if (empty($plugin)) {
 					$plugin = 'app';
@@ -137,7 +140,7 @@ class CallbacksBehavior extends ModelBehavior {
 				$this->settings[$folder][$plugin] = $callbackName;
 			}
 		}
-		return $this->settings;
+		Cache::write('_plugin_callbacks_', $this->settings, '_cake_models_');
 	}
 	/**
 	 * Run callback
