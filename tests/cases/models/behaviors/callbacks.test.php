@@ -55,7 +55,7 @@ class PluginCallbacksTestCase extends CakeTestCase {
 		$expected = APP . 'plugins' . DS . 'plugin_callbacks' . DS . 'tests' . DS . 'mock_app' . DS;
 		$this->assertEqual($expected, $this->MockedPluginModel->Behaviors->Callbacks->path);
 
-		$expected = array('my_custom_plugin' => array('app' => 'AppMyCustomPlugin'));
+		$expected = array('my_custom_plugin' => array('app' => 'AppMyCustomPlugin', 'requestor_plugin' => 'RequestorPluginMyCustomPlugin'));
 		$this->assertEqual($expected, $this->MockedPluginModel->Behaviors->Callbacks->settings);
 	}
 	/**
@@ -70,6 +70,7 @@ class PluginCallbacksTestCase extends CakeTestCase {
 		$this->MockedPluginModel->suspend($data);
 		$expected = array(
 			'Passed in app before suspend user method',
+			'Passed in requestor_plugin before suspend user method',
 			'Passed in plugin model method',
 			'Passed in app after suspend model method',
 		);
@@ -81,6 +82,7 @@ class PluginCallbacksTestCase extends CakeTestCase {
 		$this->MockedPluginModel->suspend($data);
 		$expected = array(
 			'Passed in app before suspend user method',
+			'Passed in requestor_plugin before suspend user method',
 			'Passed in plugin model method',
 			'Passed in app to handle an extra case',
 		);

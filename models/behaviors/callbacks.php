@@ -123,12 +123,13 @@ class CallbacksBehavior extends ModelBehavior {
 			if ($Folder->cd($this->path . 'models' . DS . 'callbacks')) {
 				$files = $Folder->findRecursive('([a-z_]+)_' . $folder . '.php');
 			}
+			$files = array_flip($files);
 			foreach($folders as $_folder) {
-				if ($Folder->cd($this->path . 'plugins' . DS . $_folder . 'models' . DS . 'callbacks')) {
-					array_push($files, $Folder->findRecursive('([a-z_]+)_' . $folder . '.php'));
+				if ($Folder->cd($this->path . 'plugins' . DS . $_folder . DS . 'models' . DS . 'callbacks')) {
+					$files = array_merge($files, array_flip($Folder->findRecursive('([a-z_]+)_' . $folder . '.php')));
 				}
 			}
-			foreach ($files as $k => $file) {
+			foreach (array_keys($files) as $k => $file) {
 				if (!preg_match_all('/models\/callbacks\/([a-z_]+)_' . $folder . '\.php/i', $file, $matches)) {
 					continue;
 				}
@@ -136,10 +137,7 @@ class CallbacksBehavior extends ModelBehavior {
 				if (empty($plugin)) {
 					$plugin = 'app';
 				}
-				$callbackName = Inflector::camelize($plugin) . '.' . Inflector::camelize(sprintf('%s_%s', $plugin, $folder));
-				if ($plugin == 'app') {
-					$callbackName = preg_replace('/App\./', '', $callbackName);
-				}
+				$callbackName = Inflector::camelize(sprintf('%s_%s', $plugin, $folder));
 				$this->settings[$folder][$plugin] = $callbackName;
 			}
 		}
