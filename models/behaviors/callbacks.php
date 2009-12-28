@@ -93,6 +93,9 @@ class CallbacksBehavior extends ModelBehavior {
 	 * @access public
 	 */
 	public function setup(&$Model, $config = array()) {
+		if (!isset($Model->plugin) || empty($Model->plugin)) {
+			trigger_error(sprintf(__('CallbacksBehavior requires that the model it is attached to identifies the plugin it belongs to. Define `plugin` var for %s model.', true), $Model->name), E_USER_ERROR);
+		}
 		$this->path = APP;
 		$this->_set($config);
 		$this->load();
@@ -152,9 +155,6 @@ class CallbacksBehavior extends ModelBehavior {
 	 * @access public
 	 */
 	public function run(&$Model, $on, $data = array()) {
-		if (empty($this->settings[$Model->plugin])) {
-			return true;
-		}
 		$result = null;
 		$method = 'on' . $Model->name . Inflector::classify($on);
 		foreach ($this->settings[$Model->plugin] as $plugin => $class) {
