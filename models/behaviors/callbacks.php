@@ -172,7 +172,8 @@ class CallbacksBehavior extends ModelBehavior {
 			if (!in_array($method, get_class_methods($class))) {
 				continue;
 			}
-			$result = $Callbacks->{$method}($Model, $data);
+			array_unshift($data, $Model);
+			$result = call_user_func_array(array($Callbacks, $method), $data);
 			$this->trace[$Model->plugin][$Model->name][$plugin][$on] = $result;
 		}
 		return $result;
