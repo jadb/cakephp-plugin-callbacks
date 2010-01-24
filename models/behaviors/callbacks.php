@@ -20,51 +20,6 @@
  * @author jad
  * @package plugin_callbacks
  * @subpackage plugin_callbacks.models.behaviors
- * @since 0.1
- */
-/**
- * A callback file is a file located inside APP/models/callbacks/, or
- * APP/plugins/ANOTHER_PLUGIN/models/callbacks/ and follow the below
- * naming convention:
- *
- * 	Inside app:
- *
- * 		File: app_{my_plugin}.php
- * 		Class: AppMyPluginCallbacks
- *
- * 	or inside another plugins:
- *
- * 		File: another_plugin_{my_plugin}.php
- * 		Class: AnotherPluginMyPluginCallbacks
- *
- * In the above examples, the plugin requesting the callbacks name is `my_plugin`.
- * In the second example, the other plugin's name is `another_plugin`
- *
- * Callback methods are defined using the following convention:
- *
- * 	onPluginModelNameDefinedPluginCallbackName
- *
- * In this example, the plugin's model requesting the callback is `PluginModelName`
- * and the defined callback is `DefinedPluginCallbackName`
- *
- * To enable a `beforeRefund` callback to be called from the app or any other
- * plugin for `billing` model `Invoice`, add the following line at the beginning of
- * its `refund` method:
- *
- * 	$this->Behaviors->Callbacks->run($this, 'beforeRefund', $data);
- *
- * According to the above example, a callback can be defined in the `app` as follow:
- *
- * 	File: app_billing.php
- * 	Class: AppBillingCallbacks
- * 	Method: onInvoiceBeforeRefund
- *
- * or in `marketing` plugin like this:
- *
- * 	File: marketing_billing.php
- * 	Class: MarketingBillingCallbacks
- * 	Method: onInvoiceBeforeRefund
- *
  */
 class CallbacksBehavior extends ModelBehavior {
 	/**
