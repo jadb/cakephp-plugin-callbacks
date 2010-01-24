@@ -1,12 +1,13 @@
 <?php
 /**
- * PluginCallbacks Test Case
+ * PluginCallbacks Behavior Test Case
  *
  * @copyright (c)2005-2009, WDT Media Corp (http://wdtmedia.net)
- * @author jad
+ * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
+ * @link http://github.com/jadb/cakephp-plugin-callbacks
+ * @author jadb
  * @package plugin_callbacks
  * @subpackage plugin_callbacks.tests.cases.models.behaviors
- * @since 1.0.0
  */
 class PluginCallbacksTestCase extends CakeTestCase {
 	public $autoFixtures = false;

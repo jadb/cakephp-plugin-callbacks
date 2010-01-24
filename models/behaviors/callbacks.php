@@ -16,8 +16,8 @@
  *
  * @copyright (c)2005-2009, WDT Media Corp (http://wdtmedia.net)
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
- * @link http://github.com/jadb/plugin_callbacks
- * @author jad
+ * @link http://github.com/jadb/cakephp-plugin-callbacks
+ * @author jadb
  * @package plugin_callbacks
  * @subpackage plugin_callbacks.models.behaviors
  */
